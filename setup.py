@@ -22,7 +22,7 @@ if __name__ == '__main__':
         url='https://github.com/rec/dataclass',
         py_modules=['dataclass'],
         description='A slightly improved dataclasses',
-        long_description=open('README.md').read(),
+        long_description=open('README.rst').read(),
         license='MIT',
         classifiers=_classifiers,
         keywords=['dataclass'],
