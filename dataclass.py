@@ -4,7 +4,7 @@ import functools
 import xmod
 
 __all__ = 'asdict', 'astuple', 'dataclass', 'field', 'fields', 'replace'
-__version__ = '0.9.1'
+__version__ = '0.9.2'
 
 FROZEN = True
 _METHODS = 'asdict', 'astuple', 'fields', 'replace'
