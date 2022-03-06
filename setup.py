@@ -21,7 +21,7 @@ if __name__ == '__main__':
         author_email='tom@swirly.com',
         url='https://github.com/rec/dataclass',
         py_modules=['dataclass'],
-        description='A slightly improved dataclasses',
+        description='Slightly improved dataclasses, backward compatible',
         long_description=open('README.rst').read(),
         license='MIT',
         classifiers=_classifiers,

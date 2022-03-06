@@ -1,8 +1,9 @@
+from dataclasses import asdict, astuple, fields, replace
 import dataclasses
 import functools
 import xmod
 
-__all__ = 'field', 'dataclass'
+__all__ = 'asdict', 'astuple', 'dataclass', 'field', 'fields', 'replace'
 __version__ = '0.9.1'
 
 FROZEN = True
@@ -17,7 +18,7 @@ def dataclass(cls=None, **kwargs):
         * Adds three new instance methods: `asdict()`, `astuple()`, `replace()`
         * ...and one new class method, `fields()`
         * `frozen=True` is now the default!
-        * xmoded for less cruft
+        * `xmod`-ed for less cruft
     """
     if not cls:
         return functools.partial(dataclass, **kwargs)
@@ -39,7 +40,6 @@ def dataclass(cls=None, **kwargs):
 def field(default_factory=None, **kwargs):
     """
       Like dataclasses.field, except:
-        * `default_factory` is now a positional parameter
-        * perfectly backward compatible
+        * `default_factory` is now also a positional parameter
     """
     return dataclasses.field(default_factory=default_factory, **kwargs)
