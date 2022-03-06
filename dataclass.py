@@ -3,7 +3,7 @@ import functools
 import xmod
 
 __all__ = 'field', 'dataclass'
-__version__ = '0.9.0'
+__version__ = '0.9.1'
 
 FROZEN = True
 _METHODS = 'asdict', 'astuple', 'fields', 'replace'
