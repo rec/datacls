@@ -29,17 +29,10 @@ Usage examples
         two: int = 2
         three: Dict = dataclass.field(dict)  # Simplified `field`
 
-    @dataclass(frozen=False)
-    class OneMutable:
-        one: str = 'one'
-        two: int = 2
-        three: Dict = dataclass.field(dict)
-
-    o = One()
-
     #
     # Three new instance methods
     #
+    o = One()
     assert o.asdict() == {'one': 'one', 'two': 2, 'three': {}}
     assert o.astuple() == ('one', 2, {})
 
@@ -60,6 +53,12 @@ Usage examples
         pass
     else:
         raise AttributeError('Was mutable!')
+
+    @dataclass(frozen=False)
+    class OneMutable:
+        one: str = 'one'
+        two: int = 2
+        three: Dict = dataclass.field(dict)
 
     om = OneMutable()
     om.one = 'three'
