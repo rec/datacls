@@ -3,16 +3,17 @@ import dataclasses
 import functools
 import xmod
 
-__all__ = 'asdict', 'astuple', 'dataclass', 'field', 'fields', 'replace'
+__all__ = (
+    'asdict', 'astuple', 'frozen', 'field', 'fields', 'mutable', 'replace'
+)
 __version__ = '0.9.3'
 
-FROZEN = True
 _METHODS = 'asdict', 'astuple', 'fields', 'replace'
 _CLASS_METHODS = {'fields'}
 
 
-@xmod
-def dataclass(cls=None, **kwargs):
+@functools.wraps(dataclasses.dataclass)
+def mutable(cls=None, **kwargs):
     """
       Like dataclasses.dataclass, except:
         * Adds three new instance methods: `asdict()`, `astuple()`, `replace()`
@@ -21,19 +22,24 @@ def dataclass(cls=None, **kwargs):
         * `xmod`-ed for less cruft
     """
     if not cls:
-        return functools.partial(dataclass, **kwargs)
+        return functools.partial(mutable, **kwargs)
 
-    kwargs.setdefault('frozen', FROZEN)
     dcls = dataclasses.dataclass(cls, **kwargs)
-
-    methods = (m for m in _METHODS if not hasattr(dcls, m))
+    methods = (m for m in _METHODS if not hasattr(cls, m))
     for m in methods:
         method = getattr(dataclasses, m)
         if m in _CLASS_METHODS:
             method = classmethod(method)
-        setattr(dcls, m, method)
+        setattr(cls, m, method)
 
-    return dcls
+    return cls
+
+
+@functools.wraps(dataclasses.dataclass)
+@xmod
+def frozen(cls=None, **kwargs):
+    kwargs.setdefault('frozen', True)
+    return mutable(cls, **kwargs)
 
 
 @functools.wraps(dataclasses.field)

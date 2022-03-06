@@ -1,18 +1,40 @@
 ========================================================
-``dataclass``: slightly improved dataclasses
+``dataclass``: a slightly improved dataclasses
 ========================================================
 
-* ``dataclass``: like ``dataclasses.dataclass``, except:
-    * Adds three new instance methods to each dataclass
-        * ``asdict()``, ``astuple()``, ``replace()``
-    * ...and one new class method,
-        * ``fields()``
-    * ``frozen=True`` is now the default!
-    * ``xmod`` -ed for less cruft
+The Python built-in
+`dataclass <https://docs.python.org/3/library/dataclasses.html>`_ is almost
+perfect, and this module just adds a little bit on top of it to smooth the
+rough edges a bit.
 
-* ``dataclass.field``: Like ``dataclasses.field``, except:
-      * ``default_factory`` is now a positional parameter
-      * perfectly backward compatible
+``dataclass.mutable()`` is
+`dataclasses.dataclass()
+<https://docs.python.org/3/library/dataclasses.html#dataclasses.dataclass>`_
+, except:
+
+* three new instance method added to each dataclass
+  * ``asdict()`` like `dataclasses.asdict()
+<https://docs.python.org/3/library/dataclasses.html#dataclasses.asdict>`_
+  * ``astuple()`` like `dataclasses.astuple()
+<https://docs.python.org/3/library/dataclasses.html#dataclasses.astuple>`_
+  * ``replace()`` like `dataclasses.replace()
+<https://docs.python.org/3/library/dataclasses.html#dataclasses.replace>`_
+* ...and one new class method,
+  * ``fields()`` like `dataclasses.fields()
+<https://docs.python.org/3/library/dataclasses.html#dataclasses.fields>`_
+* ``xmod`` -ed for less cruft
+
+
+``dataclass.immutable()`` is like ``dataclass.mutable`` except
+``frozen=True`` by default.
+
+``dataclass.field`` just like `dataclasses.field
+<https://docs.python.org/3/library/dataclasses.html#dataclasses.field>`_
+except ``default_factory`` is now (also) a positional parameter.
+
+``dataclass.immutable()`` is also known as just ``dataclass()``!  You can get
+this just by calling the module, to encourage the use of immutable data
+structures by default.
 
 
 Usage examples
@@ -54,7 +76,7 @@ Usage examples
     else:
         raise AttributeError('Was mutable!')
 
-    @dataclass(frozen=False)
+    @dataclass.mutable
     class OneMutable:
         one: str = 'one'
         two: int = 2
@@ -82,7 +104,7 @@ Usage examples
     assert ov.fields == 1
     assert ov.replace == 1
 
-    # In this case, you can access them functions on dataclass:
+    # In this case, you can access them as functions on `dataclass`:
     assert (
         dataclass.asdict(ov) ==
         {'asdict': 1, 'astuple': 1, 'fields': 1, 'one': 'one', 'replace': 1}
