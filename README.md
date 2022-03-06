@@ -1,0 +1,2 @@
+# dataclass
+Slightly improved dataclasses
