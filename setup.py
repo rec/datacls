@@ -12,16 +12,16 @@ _classifiers = [
 
 if __name__ == '__main__':
     from setuptools import setup
-    import dataclass
+    import datacls
 
     setup(
-        name='dataclas',
-        version=dataclass.__version__,
+        name='datacls',
+        version=datacls.__version__,
         author='Tom Ritchford',
         author_email='tom@swirly.com',
-        url='https://github.com/rec/dataclass',
-        py_modules=['dataclass'],
-        description='Slightly improved dataclasses, backward compatible',
+        url='https://github.com/rec/datacls',
+        py_modules=['datacls'],
+        description='Slightly improved dataclasses',
         long_description=open('README.rst').read(),
         license='MIT',
         classifiers=_classifiers,

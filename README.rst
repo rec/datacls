@@ -1,38 +1,35 @@
 ========================================================
-``dataclass``: a slightly improved dataclasses
+``datacls``: a slightly improved dataclasses
 ========================================================
 
 The Python built-in
-`dataclass <https://docs.python.org/3/library/dataclasses.html>`_ is almost
+`datacls <https://docs.python.org/3/library/dataclasses.html>`_ is almost
 perfect, and this module just adds a little bit on top of it to smooth the
 rough edges a bit.
 
-``dataclass.mutable()`` is
+``datacls.mutable()`` is
 `dataclasses.dataclass()
 <https://docs.python.org/3/library/dataclasses.html#dataclasses.dataclass>`_
 , except:
 
-* three new instance method added to each dataclass
-  * ``asdict()`` like `dataclasses.asdict()
-<https://docs.python.org/3/library/dataclasses.html#dataclasses.asdict>`_
-  * ``astuple()`` like `dataclasses.astuple()
-<https://docs.python.org/3/library/dataclasses.html#dataclasses.astuple>`_
-  * ``replace()`` like `dataclasses.replace()
-<https://docs.python.org/3/library/dataclasses.html#dataclasses.replace>`_
-* ...and one new class method,
-  * ``fields()`` like `dataclasses.fields()
-<https://docs.python.org/3/library/dataclasses.html#dataclasses.fields>`_
+* Three new instance method added to each dataclass
+
+  * ``asdict()`` like `dataclasses.asdict() <https://docs.python.org/3/library/dataclasses.html#dataclasses.asdict>`_
+  * ``astuple()`` like `dataclasses.astuple() <https://docs.python.org/3/library/dataclasses.html#dataclasses.astuple>`_
+  * ``replace()`` like `dataclasses.replace()<https://docs.python.org/3/library/dataclasses.html#dataclasses.replace>`_
+
+*...and one new class method,
+  * ``fields()`` like `dataclasses.fields() <https://docs.python.org/3/library/dataclasses.html#dataclasses.fields>`_
 * ``xmod`` -ed for less cruft
 
 
-``dataclass.immutable()`` is like ``dataclass.mutable`` except
+``datacls.immutable()`` is like ``datacls.mutable`` except
 ``frozen=True`` by default.
 
-``dataclass.field`` just like `dataclasses.field
-<https://docs.python.org/3/library/dataclasses.html#dataclasses.field>`_
+``datacls.field`` just like `dataclasses.field <https://docs.python.org/3/library/dataclasses.html#dataclasses.field>`_
 except ``default_factory`` is now (also) a positional parameter.
 
-``dataclass.immutable()`` is also known as just ``dataclass()``!  You can get
+``datacls.immutable()`` is also known as just ``dataclass()``!  You can get
 this just by calling the module, to encourage the use of immutable data
 structures by default.
 
@@ -42,14 +39,14 @@ Usage examples
 
 .. code-block:: python
 
-    import dataclass
+    import datacls
     from typing import Dict
 
-    @dataclass
+    @datacls
     class One:
         one: str = 'one'
         two: int = 2
-        three: Dict = dataclass.field(dict)  # Simplified `field`
+        three: Dict = datacls.field(dict)  # Simplified `field`
 
     #
     # Three new instance methods
@@ -76,20 +73,20 @@ Usage examples
     else:
         raise AttributeError('Was mutable!')
 
-    @dataclass.mutable
+    @datacls.mutable
     class OneMutable:
         one: str = 'one'
         two: int = 2
-        three: Dict = dataclass.field(dict)
+        three: Dict = datacls.field(dict)
 
     om = OneMutable()
     om.one = 'three'
     assert str(om) == "OneMutable(one='three', two=2, three={})"
 
     #
-    # These four new methods won't break your old dataclasses:
+    # These four new methods won't break your old dataclses:
     #
-    @dataclass
+    @datacls
     class Overloads:
         one: str = 'one'
         asdict: int = 1
@@ -104,10 +101,10 @@ Usage examples
     assert ov.fields == 1
     assert ov.replace == 1
 
-    # In this case, you can access them as functions on `dataclass`:
+    # In this case, you can access them as functions on `datacls`:
     assert (
-        dataclass.asdict(ov) ==
+        datacls.asdict(ov) ==
         {'asdict': 1, 'astuple': 1, 'fields': 1, 'one': 'one', 'replace': 1}
     )
 
-    assert dataclass.astuple(ov) == ('one', 1, 1, 1, 1)
+    assert datacls.astuple(ov) == ('one', 1, 1, 1, 1)

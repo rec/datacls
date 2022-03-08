@@ -1,22 +1,22 @@
-import dataclass
+import datacls
 from typing import Dict
 
 
-@dataclass
+@datacls
 class One:
     one: str = 'one'
     two: int = 2
-    three: Dict = dataclass.field(dict)
+    three: Dict = datacls.field(dict)
 
 
-@dataclass(frozen=False)
+@datacls(frozen=False)
 class OneMutable:
     one: str = 'one'
     two: int = 2
-    three: Dict = dataclass.field(dict)
+    three: Dict = datacls.field(dict)
 
 
-def test_dataclass():
+def test_datacls():
     o = One()
     assert o.asdict() == {'one': 'one', 'two': 2, 'three': {}}
     assert o.astuple() == ('one', 2, {})
@@ -44,7 +44,7 @@ def test_frozen():
     assert str(om) == "OneMutable(one='three', two=2, three={})"
 
 
-@dataclass
+@datacls
 class Overloads:
     one: str = 'one'
     asdict: int = 1
@@ -62,5 +62,5 @@ def test_overloads():
     assert ov.replace == 1
 
     d = {'asdict': 1, 'astuple': 1, 'fields': 1, 'one': 'one', 'replace': 1}
-    assert dataclass.asdict(ov) == d
-    assert dataclass.astuple(ov) == ('one', 1, 1, 1, 1)
+    assert datacls.asdict(ov) == d
+    assert datacls.astuple(ov) == ('one', 1, 1, 1, 1)
