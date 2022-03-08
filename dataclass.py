@@ -25,14 +25,14 @@ def mutable(cls=None, **kwargs):
         return functools.partial(mutable, **kwargs)
 
     dcls = dataclasses.dataclass(cls, **kwargs)
-    methods = (m for m in _METHODS if not hasattr(cls, m))
+    methods = (m for m in _METHODS if not hasattr(dcls, m))
     for m in methods:
         method = getattr(dataclasses, m)
         if m in _CLASS_METHODS:
             method = classmethod(method)
-        setattr(cls, m, method)
+        setattr(dcls, m, method)
 
-    return cls
+    return dcls
 
 
 @functools.wraps(dataclasses.dataclass)
