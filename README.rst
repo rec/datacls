@@ -7,31 +7,34 @@ The Python built-in
 perfect, and this module just adds a little bit on top of it to smooth the
 rough edges a bit.
 
-``datacls.mutable()`` is
-`dataclasses.dataclass()
+---------------------------------
+
+``@datacls.mutable`` is
+`@dataclasses.dataclass()
 <https://docs.python.org/3/library/dataclasses.html#dataclasses.dataclass>`_
 , except:
 
-* Three new instance method added to each dataclass
+* Dataclasses have three new instance method
 
   * ``asdict()`` like `dataclasses.asdict() <https://docs.python.org/3/library/dataclasses.html#dataclasses.asdict>`_
   * ``astuple()`` like `dataclasses.astuple() <https://docs.python.org/3/library/dataclasses.html#dataclasses.astuple>`_
-  * ``replace()`` like `dataclasses.replace()<https://docs.python.org/3/library/dataclasses.html#dataclasses.replace>`_
+  * ``replace()`` like `dataclasses.replace() <https://docs.python.org/3/library/dataclasses.html#dataclasses.replace>`_
 
-*...and one new class method,
+* ...and one new class method,
+
   * ``fields()`` like `dataclasses.fields() <https://docs.python.org/3/library/dataclasses.html#dataclasses.fields>`_
 * ``xmod`` -ed for less cruft
 
+-----------------------------------
 
-``datacls.immutable()`` is like ``datacls.mutable`` except
+``@datacls.immutable`` or just ``@datacls`` is like ``datacls.mutable`` except
 ``frozen=True`` by default.
 
-``datacls.field`` just like `dataclasses.field <https://docs.python.org/3/library/dataclasses.html#dataclasses.field>`_
+-----------------------------------
+
+``datacls.field()`` just like `dataclasses.field() <https://docs.python.org/3/library/dataclasses.html#dataclasses.field>`_
 except ``default_factory`` is now (also) a positional parameter.
 
-``datacls.immutable()`` is also known as just ``dataclass()``!  You can get
-this just by calling the module, to encourage the use of immutable data
-structures by default.
 
 
 Usage examples
