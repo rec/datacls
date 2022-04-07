@@ -37,15 +37,22 @@ def mutable(cls=None, **kwargs):
 
 @functools.wraps(dataclasses.dataclass)
 @xmod
-def frozen(cls=None, **kwargs):
+def immutable(cls=None, **kwargs):
     kwargs.setdefault('frozen', True)
     return mutable(cls, **kwargs)
 
 
 @functools.wraps(dataclasses.field)
-def field(default_factory=None, **kwargs):
+def field(default_factory=None, *, hidden=False, **kwargs):
     """
       Like dataclasses.field, except:
         * `default_factory` is now also a positional parameter
+        * `hidden` turns off init, repr, compare
     """
-    return dataclasses.field(default_factory=default_factory, **kwargs)
+    if hidden:
+        for k in 'compare', 'init', 'repr':
+            kwargs.setdefault(k, False)
+    if default_factory:
+        kwargs['default_factory'] = default_factory
+
+    return dataclasses.field(**kwargs)

@@ -64,3 +64,39 @@ def test_overloads():
     d = {'asdict': 1, 'astuple': 1, 'fields': 1, 'one': 'one', 'replace': 1}
     assert datacls.asdict(ov) == d
     assert datacls.astuple(ov) == ('one', 1, 1, 1, 1)
+
+
+@datacls
+class Hidden:
+    one: str = 'one'
+    two: str = datacls.field(hidden=True)
+
+    def __post_init__(self):
+        super().__setattr__('two', self.one + self.one)
+
+
+def test_hidden():
+    assert str(Hidden()) == "Hidden(one='one')"
+
+    g, h = Hidden(), Hidden()
+    assert g.two == h.two
+    assert g == h
+    assert hash(g) == hash(h)
+
+    object.__setattr__(h, 'two', 'ninety nine')
+    assert g.two != h.two
+    assert g == h
+    assert hash(g) == hash(h)
+
+    try:
+        Hidden(two='two')
+    except TypeError:
+        pass
+    else:
+        raise ValueError
+    try:
+        Hidden('1', 'two')
+    except TypeError:
+        pass
+    else:
+        raise ValueError
