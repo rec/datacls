@@ -6,7 +6,7 @@ import xmod
 __all__ = (
     'asdict', 'astuple', 'field', 'fields', 'immutable', 'mutable', 'replace'
 )
-__version__ = '1.1.0'
+__version__ = '2.0.0'
 
 _METHODS = 'asdict', 'astuple', 'fields', 'replace'
 _CLASS_METHODS = {'fields'}
