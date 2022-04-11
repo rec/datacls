@@ -100,3 +100,12 @@ def test_hidden():
         pass
     else:
         raise ValueError
+
+
+@datacls
+class Default:
+    one: str = datacls.field('one')
+
+
+def test_default():
+    assert Default().one == 'one'

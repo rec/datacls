@@ -4,12 +4,13 @@ import functools
 import xmod
 
 __all__ = (
-    'asdict', 'astuple', 'frozen', 'field', 'fields', 'mutable', 'replace'
+    'asdict', 'astuple', 'field', 'fields', 'immutable', 'mutable', 'replace'
 )
 __version__ = '1.1.0'
 
 _METHODS = 'asdict', 'astuple', 'fields', 'replace'
 _CLASS_METHODS = {'fields'}
+_NONE = object()
 
 
 @functools.wraps(dataclasses.dataclass)
@@ -43,16 +44,18 @@ def immutable(cls=None, **kwargs):
 
 
 @functools.wraps(dataclasses.field)
-def field(default_factory=None, *, hidden=False, **kwargs):
+def field(default=_NONE, *, hidden=False, **kwargs):
     """
-      Like dataclasses.field, except:
-        * `default_factory` is now also a positional parameter
+      This is dataclasses.field() with two new parameters:
+        * `default` can be either a value or a callable
         * `hidden` turns off init, repr, compare
     """
     if hidden:
         for k in 'compare', 'init', 'repr':
             kwargs.setdefault(k, False)
-    if default_factory:
-        kwargs['default_factory'] = default_factory
+    if default is not _NONE:
+        kwargs['default_factory'] = (
+            default if callable(default) else lambda: default
+        )
 
     return dataclasses.field(**kwargs)
