@@ -70,9 +70,11 @@ def test_overloads():
 class Hidden:
     one: str = 'one'
     two: str = datacls.field(hidden=True)
+    three: str = datacls.hidden()
 
     def __post_init__(self):
         super().__setattr__('two', self.one + self.one)
+        super().__setattr__('three', self.two + self.one)
 
 
 def test_hidden():
@@ -85,6 +87,11 @@ def test_hidden():
 
     object.__setattr__(h, 'two', 'ninety nine')
     assert g.two != h.two
+    assert g == h
+    assert hash(g) == hash(h)
+
+    object.__setattr__(h, 'three', 'ninety nine')
+    assert g.three != h.three
     assert g == h
     assert hash(g) == hash(h)
 

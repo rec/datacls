@@ -4,12 +4,19 @@ import functools
 import xmod
 
 __all__ = (
-    'asdict', 'astuple', 'field', 'fields', 'immutable', 'mutable', 'replace'
+    'asdict',
+    'astuple',
+    'field',
+    'fields',
+    'hidden',
+    'immutable',
+    'mutable',
+    'replace',
 )
 __version__ = '2.0.0'
 
 _METHODS = 'asdict', 'astuple', 'fields', 'replace'
-_CLASS_METHODS = {'fields'}
+_CLASS_METHODS = {'field_names', 'fields'}
 _NONE = object()
 
 
@@ -28,7 +35,7 @@ def mutable(cls=None, **kwargs):
     dcls = dataclasses.dataclass(cls, **kwargs)
     methods = (m for m in _METHODS if not hasattr(dcls, m))
     for m in methods:
-        method = getattr(dataclasses, m)
+        method = globals()[m]
         if m in _CLASS_METHODS:
             method = classmethod(method)
         setattr(dcls, m, method)
@@ -59,3 +66,6 @@ def field(default=_NONE, *, hidden=False, **kwargs):
         )
 
     return dataclasses.field(**kwargs)
+
+
+hidden = functools.partial(field, hidden=True)
