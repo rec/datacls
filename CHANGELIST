@@ -1,3 +1,7 @@
+## v2.1.0 - 22/04/15
+
+* Add datacls.hidden for hidden fields
+
 ## v2.0.0 - 22/04/11
 
 * New parameter field(default)
