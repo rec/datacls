@@ -18,6 +18,8 @@ __version__ = '2.1.0'
 _METHODS = 'asdict', 'astuple', 'fields', 'replace'
 _CLASS_METHODS = {'field_names', 'fields'}
 _NONE = object()
+_DEFAULTS = 'default', 'default_factory'
+_DFLT_ERR = 'Just one of default, default_factory and default_value may be set'
 
 
 @functools.wraps(dataclasses.dataclass)
@@ -51,7 +53,7 @@ def immutable(cls=None, **kwargs):
 
 
 @functools.wraps(dataclasses.field)
-def field(default=_NONE, *, hidden=False, **kwargs):
+def field(default_value=_NONE, *, hidden=False, **kwargs):
     """
       This is dataclasses.field() with two new parameters:
         * `default` can be either a value or a callable
@@ -60,10 +62,12 @@ def field(default=_NONE, *, hidden=False, **kwargs):
     if hidden:
         for k in 'compare', 'init', 'repr':
             kwargs.setdefault(k, False)
-    if default is not _NONE:
-        kwargs['default_factory'] = (
-            default if callable(default) else lambda: default
-        )
+
+    if default_value is not _NONE:
+        if any(d in kwargs for d in _DEFAULTS):
+            raise ValueError(_DFLT_ERR)
+        default_name = _DEFAULTS[callable(default_value)]
+        kwargs[default_name] = default_value
 
     return dataclasses.field(**kwargs)
 
