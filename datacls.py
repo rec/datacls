@@ -13,7 +13,7 @@ __all__ = (
     'mutable',
     'replace',
 )
-__version__ = '2.1.0'
+__version__ = '3.0.0'
 
 _METHODS = 'asdict', 'astuple', 'fields', 'replace'
 _CLASS_METHODS = {'field_names', 'fields'}
