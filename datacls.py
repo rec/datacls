@@ -1,5 +1,12 @@
 from dataclasses import (
-    asdict, astuple, dataclass, field, fields, make_dataclass, replace
+    MISSING,
+    asdict,
+    astuple,
+    dataclass,
+    field as _field,
+    fields,
+    make_dataclass,
+    replace,
 )
 import functools
 import xmod
@@ -40,6 +47,11 @@ def mutable(cls=None, **kwargs):
     dcls = dataclass(cls, **kwargs)
     add_methods(dcls)
     return dcls
+
+
+@functools.wraps(_field)
+def field(default_factory=MISSING, **kwargs):
+    return _field(default_factory=default_factory, **kwargs)
 
 
 def add_methods(dcls):

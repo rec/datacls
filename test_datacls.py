@@ -6,14 +6,14 @@ from typing import Dict
 class One:
     one: str = 'one'
     two: int = 2
-    three: Dict = datacls.field(default_factory=dict)
+    three: Dict = datacls.field(dict)
 
 
 @datacls(frozen=False)
 class OneMutable:
     one: str = 'one'
     two: int = 2
-    three: Dict = datacls.field(default_factory=dict)
+    three: Dict = datacls.field(dict)
 
 
 def test_datacls():
