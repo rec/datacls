@@ -1,3 +1,7 @@
+## v4.0.0 - 22/06/06
+
+* Simplify datacls radically
+
 ## v3.0.0 - 22/04/17
 
 * Rename `default` parameter to `default_value`
