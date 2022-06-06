@@ -1,15 +1,18 @@
-from dataclasses import asdict, astuple, fields, replace
-import dataclasses
+from dataclasses import (
+    asdict, astuple, dataclass, field, fields, make_dataclass, replace
+)
 import functools
 import xmod
 
 __all__ = (
+    'add_methods',
     'asdict',
     'astuple',
     'field',
     'fields',
     'hidden',
     'immutable',
+    'make_dataclass',
     'mutable',
     'replace',
 )
@@ -22,10 +25,10 @@ _DEFAULTS = 'default', 'default_factory'
 _DFLT_ERR = 'Just one of default, default_factory and default_value may be set'
 
 
-@functools.wraps(dataclasses.dataclass)
+@functools.wraps(dataclass)
 def mutable(cls=None, **kwargs):
     """
-      Like dataclasses.dataclass, except:
+      Like dataclass, except:
         * Adds three new instance methods: `asdict()`, `astuple()`, `replace()`
         * ...and one new class method, `fields()`
         * `frozen=True` is now the default!
@@ -34,7 +37,12 @@ def mutable(cls=None, **kwargs):
     if not cls:
         return functools.partial(mutable, **kwargs)
 
-    dcls = dataclasses.dataclass(cls, **kwargs)
+    dcls = dataclass(cls, **kwargs)
+    add_methods(dcls)
+    return dcls
+
+
+def add_methods(dcls):
     methods = (m for m in _METHODS if not hasattr(dcls, m))
     for m in methods:
         method = globals()[m]
@@ -42,34 +50,7 @@ def mutable(cls=None, **kwargs):
             method = classmethod(method)
         setattr(dcls, m, method)
 
-    return dcls
 
-
-@functools.wraps(dataclasses.dataclass)
-@xmod
-def immutable(cls=None, **kwargs):
-    kwargs.setdefault('frozen', True)
-    return mutable(cls, **kwargs)
-
-
-@functools.wraps(dataclasses.field)
-def field(default_value=_NONE, *, hidden=False, **kwargs):
-    """
-      This is dataclasses.field() with two new parameters:
-        * `default` can be either a value or a callable
-        * `hidden` turns off init, repr, compare
-    """
-    if hidden:
-        for k in 'compare', 'init', 'repr':
-            kwargs.setdefault(k, False)
-
-    if default_value is not _NONE:
-        if any(d in kwargs for d in _DEFAULTS):
-            raise ValueError(_DFLT_ERR)
-        default_name = _DEFAULTS[callable(default_value)]
-        kwargs[default_name] = default_value
-
-    return dataclasses.field(**kwargs)
-
-
-hidden = functools.partial(field, hidden=True)
+hidden = functools.partial(field, compare=False, init=False, repr=False)
+immutable = functools.partial(mutable, frozen=True)
+xmod(immutable, 'datacls')

@@ -6,14 +6,14 @@ from typing import Dict
 class One:
     one: str = 'one'
     two: int = 2
-    three: Dict = datacls.field(dict)
+    three: Dict = datacls.field(default_factory=dict)
 
 
 @datacls(frozen=False)
 class OneMutable:
     one: str = 'one'
     two: int = 2
-    three: Dict = datacls.field(dict)
+    three: Dict = datacls.field(default_factory=dict)
 
 
 def test_datacls():
@@ -69,7 +69,7 @@ def test_overloads():
 @datacls
 class Hidden:
     one: str = 'one'
-    two: str = datacls.field(hidden=True)
+    two: str = datacls.hidden()
     three: str = datacls.hidden()
 
     def __post_init__(self):
@@ -111,7 +111,7 @@ def test_hidden():
 
 @datacls
 class Default:
-    one: str = datacls.field('one')
+    one: str = datacls.field(default='one')
 
 
 def test_default():
