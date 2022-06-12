@@ -44,9 +44,7 @@ def mutable(cls=None, **kwargs):
     if not cls:
         return functools.partial(mutable, **kwargs)
 
-    dcls = dataclass(cls, **kwargs)
-    add_methods(dcls)
-    return dcls
+    return add_methods(dataclass(cls, **kwargs))
 
 
 @functools.wraps(_field)
@@ -61,6 +59,7 @@ def add_methods(dcls):
         if m in _CLASS_METHODS:
             method = classmethod(method)
         setattr(dcls, m, method)
+    return dcls
 
 
 hidden = functools.partial(field, compare=False, init=False, repr=False)
