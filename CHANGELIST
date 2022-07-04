@@ -1,3 +1,7 @@
+## v4.2.1 - 22/07/04
+
+* Include dependencies in setup.py
+
 ## v4.2.0 - 22/06/12
 
 * Make add_methods() return the modified class
