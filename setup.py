@@ -14,16 +14,20 @@ if __name__ == '__main__':
     from setuptools import setup
     import datacls
 
+    with open('requirements.txt') as f:
+        REQUIRED = f.read().splitlines()
+
     setup(
         name='datacls',
-        version=datacls.__version__,
         author='Tom Ritchford',
         author_email='tom@swirly.com',
-        url='https://github.com/rec/datacls',
-        py_modules=['datacls'],
-        description='Slightly improved dataclasses',
-        long_description=open('README.rst').read(),
-        license='MIT',
         classifiers=_classifiers,
+        description='Slightly improved dataclasses',
+        install_requires=REQUIRED,
         keywords=['dataclass'],
+        license='MIT',
+        long_description=open('README.rst').read(),
+        py_modules=['datacls'],
+        url='https://github.com/rec/datacls',
+        version=datacls.__version__,
     )
