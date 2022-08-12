@@ -1,3 +1,8 @@
+## v4.3.0 - 22/08/12
+
+* Teach make_dataclass() about add_methods()
+* Enable direnv for this project
+
 ## v4.2.1 - 22/07/04
 
 * Include dependencies in setup.py
