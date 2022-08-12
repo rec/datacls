@@ -116,3 +116,15 @@ class Default:
 
 def test_default():
     assert Default().one == 'one'
+
+
+def test_make_dataclass():
+    # https://docs.python.org/3/library/dataclasses.html
+    #    #dataclasses.make_dataclass
+    C = datacls.make_dataclass(
+        'C',
+        [('x', int), 'y', ('z', int, datacls.field(default=5))],
+        namespace={'add_one': lambda self: self.x + 1}
+    )
+
+    assert sorted(c.name for c in C.fields()) == ['x', 'y', 'z']

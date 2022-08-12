@@ -5,7 +5,7 @@ from dataclasses import (
     dataclass,
     field as _field,
     fields,
-    make_dataclass,
+    make_dataclass as _make_dataclass,
     replace,
 )
 import functools
@@ -60,6 +60,11 @@ def add_methods(dcls):
             method = classmethod(method)
         setattr(dcls, m, method)
     return dcls
+
+
+@functools.wraps(_make_dataclass)
+def make_dataclass(*a, **ka):
+    return add_methods(_make_dataclass(*a, **ka))
 
 
 hidden = functools.partial(field, compare=False, init=False, repr=False)
