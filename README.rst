@@ -2,39 +2,51 @@
 ``datacls``: a slightly improved dataclasses
 ========================================================
 
-The Python built-in
-`datacls <https://docs.python.org/3/library/dataclasses.html>`_ is almost
-perfect, and this module just adds a little bit on top of it to smooth the
-rough edges a bit.
+The Python built-in module
+`dataclasses <https://docs.python.org/3/library/dataclasses.html>`_ is almost
+perfect.
+
+``datacls`` is a thin wrapper around
+``dataclasses``, completely backward-compatible,
+that makes common use cases a little easier.
 
 ---------------------------------
 
-``@datacls.mutable`` is
+``@datacls.mutable`` is exactly like
 `@dataclasses.dataclass()
 <https://docs.python.org/3/library/dataclasses.html#dataclasses.dataclass>`_
-, except:
+except that the resulting dataclass has four new methods:
 
-* Dataclasses have three new instance method
+* three new instance methods:
 
-  * ``asdict()`` like `dataclasses.asdict() <https://docs.python.org/3/library/dataclasses.html#dataclasses.asdict>`_
-  * ``astuple()`` like `dataclasses.astuple() <https://docs.python.org/3/library/dataclasses.html#dataclasses.astuple>`_
-  * ``replace()`` like `dataclasses.replace() <https://docs.python.org/3/library/dataclasses.html#dataclasses.replace>`_
+  * ``self.asdict()``, like `dataclasses.asdict() <https://docs.python.org/3/library/dataclasses.html#dataclasses.asdict>`_
+  * ``self.astuple()``, like `dataclasses.astuple() <https://docs.python.org/3/library/dataclasses.html#dataclasses.astuple>`_
+  * ``self.replace()``, like `dataclasses.replace() <https://docs.python.org/3/library/dataclasses.html#dataclasses.replace>`_
 
-* ...and one new class method,
+* ...and one new class method:
 
-  * ``fields()`` like `dataclasses.fields() <https://docs.python.org/3/library/dataclasses.html#dataclasses.fields>`_
-* ``xmod`` -ed for less cruft
+  * ``cls.fields()``, like `dataclasses.fields() <https://docs.python.org/3/library/dataclasses.html#dataclasses.fields>`_
 
------------------------------------
-
-``@datacls.immutable`` or just ``@datacls`` is like ``datacls.mutable`` except
-``frozen=True`` by default.
+The new methods are only added if they do not exist on the target dataclass,
+so it should be impossible for ``datacls`` to override or shadow user methods or
+members by mistake.
 
 -----------------------------------
 
-``datacls.field()`` just like `dataclasses.field() <https://docs.python.org/3/library/dataclasses.html#dataclasses.field>`_
-except ``default_factory`` is now (also) a positional parameter.
+``@datacls.immutable``, or just ``@datacls``, is exactly like
+``datacls.mutable`` except ``frozen=True`` by default, so members can't
+be changed after construction (without deliberately subverting the immutability).
 
+-----------------------------------
+
+``datacls.field()`` is just like
+`dataclasses.field() <https://docs.python.org/3/library/dataclasses.html#dataclasses.field>`_
+except the very common ``default_factory`` argument is now also the first and only
+positional parameter.
+
+``datacls.make_dataclass()`` is just like
+`dataclasses.make_dataclass() <https://docs.python.org/3/library/dataclasses.html#dataclasses.make_dataclass>`_
+except that the class created also has the four new methods listed above.
 
 
 Usage examples
@@ -49,25 +61,32 @@ Usage examples
     class One:
         one: str = 'one'
         two: int = 2
-        three: Dict = datacls.field(dict)  # Simplified `field`
+        three: Dict = datacls.field(dict)
 
     #
-    # Three new instance methods
+    # Three new instance methods: asdict(), astuple(), replace()
     #
     o = One()
     assert o.asdict() == {'one': 'one', 'two': 2, 'three': {}}
+
+    # Same as:
+    #
+    # import dataclasses
+    #
+    # assert dataclasses.asdict(o) == {'one': 'one', 'two': 2, 'three': {}}
+
     assert o.astuple() == ('one', 2, {})
 
     o2 = o.replace(one='seven', three={'nine': 9})
     assert o2 == One('seven', 2, {'nine': 9})
 
     #
-    # A new class method
+    # One new class method: fields()
     #
     assert [f.name for f in One.fields()] == ['one', 'two', 'three']
 
     #
-    # Immutable by default
+    # @datacls is immutable: use @datacls.mutable for mutable classes
     #
     try:
         o.one = 'three'
@@ -87,7 +106,7 @@ Usage examples
     assert str(om) == "OneMutable(one='three', two=2, three={})"
 
     #
-    # These four new methods won't break your old dataclses:
+    # These four new methods won't break your old dataclass by mistake:
     #
     @datacls
     class Overloads:
@@ -98,16 +117,17 @@ Usage examples
         replace: int = 1
 
     o = Overloads()
+
+    assert datacls.astuple(ov) == ('one', 1, 1, 1, 1)
+
     assert ov.one == 'one'
     assert ov.asdict == 1
     assert ov.astuple == 1
     assert ov.fields == 1
     assert ov.replace == 1
 
-    # In this case, you can access them as functions on `datacls`:
+    # You can still access the methods as functions on `datacls`:
     assert (
         datacls.asdict(ov) ==
         {'asdict': 1, 'astuple': 1, 'fields': 1, 'one': 'one', 'replace': 1}
     )
-
-    assert datacls.astuple(ov) == ('one', 1, 1, 1, 1)
