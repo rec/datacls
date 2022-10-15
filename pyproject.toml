@@ -8,7 +8,7 @@ auto = true
 
 [tool.poetry]
 name = "datacls"
-version = "4.4.0"
+version = "4.4.1"
 description = "Slightly improved, backward compatible dataclasses"
 authors = ["Tom Ritchford <tom@swirly.com>"]
 readme = "README.rst"
