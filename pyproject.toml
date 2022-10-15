@@ -5,3 +5,26 @@ target-version = ['py37']
 
 [tool.doks]
 auto = true
+
+[tool.poetry]
+name = "datacls"
+version = "4.4.0"
+description = "Slightly improved, backward compatible dataclasses"
+authors = ["Tom Ritchford <tom@swirly.com>"]
+readme = "README.rst"
+
+[tool.poetry.dependencies]
+python = ">=3.7"
+dtyper = "*"
+xmod = "*"
+
+
+[tool.poetry.group.dev.dependencies]
+coverage = "*"
+flake8 = "*"
+pytest = "*"
+versy = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
