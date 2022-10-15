@@ -1,3 +1,8 @@
+## v4.4.0 - 22/10/15
+
+* Add dtyper, cache_property decorators
+* Improve README.rst somewhat
+
 ## v4.3.0 - 22/08/12
 
 * Teach make_dataclass() about add_methods()
