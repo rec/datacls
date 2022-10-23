@@ -15,7 +15,6 @@ __all__ = (
     'add_methods',
     'asdict',
     'astuple',
-    'cached',
     'cached_property',
     'dtyper',
     'field',
@@ -26,7 +25,6 @@ __all__ = (
     'mutable',
     'replace',
 )
-__version__ = '4.4.0'
 
 _METHODS = 'asdict', 'astuple', 'fields', 'replace'
 _CLASS_METHODS = {'field_names', 'fields'}
@@ -56,6 +54,11 @@ def field(default_factory=MISSING, **kwargs):
 
 
 def add_methods(dcls):
+    """Adds dataclasses functions as methods to a dataclass.
+
+      Adds three new instance methods: `asdict()`, `astuple()`, `replace()`
+      and one new class method, `fields()`
+    """
     methods = (m for m in _METHODS if not hasattr(dcls, m))
     for m in methods:
         method = globals()[m]
@@ -70,16 +73,10 @@ def make_dataclass(*a, **ka):
     return add_methods(_make_dataclass(*a, **ka))
 
 
-@functools.wraps(make_dataclass)
-def dtyper(*a, **ka):
-    import dtyper
-
-    return dtyper.dataclass(*a, **ka)
-
-
 hidden = functools.partial(field, compare=False, init=False, repr=False)
 immutable = functools.partial(mutable, frozen=True)
-xmod(immutable, 'datacls')
+dtyper = None
+
 
 try:
     cached_property = functools.cached_property
@@ -136,4 +133,15 @@ except AttributeError:
                             raise TypeError(msg) from None
             return val
 
-cached = cached_property
+
+class Datacls:
+    __call__ = staticmethod(immutable)
+
+    @cached_property
+    def dtyper(self):
+        import dtyper
+
+        return dtyper.dataclass
+
+
+xmod(Datacls(), 'datacls')

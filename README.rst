@@ -6,9 +6,8 @@ The Python built-in module
 `dataclasses <https://docs.python.org/3/library/dataclasses.html>`_ is almost
 perfect.
 
-``datacls`` is a thin wrapper around
-``dataclasses``, completely backward-compatible,
-that makes common use cases a little easier.
+``datacls`` is a thin wrapper around ``dataclasses``,
+completely backward-compatible, that makes common use cases a little easier.
 
 ---------------------------------
 
@@ -47,6 +46,12 @@ positional parameter.
 ``datacls.make_dataclass()`` is just like
 `dataclasses.make_dataclass() <https://docs.python.org/3/library/dataclasses.html#dataclasses.make_dataclass>`_
 except that the class created also has the four new methods listed above.
+
+``datacls.cached_property`` is exactly like ``functools.cached_property`` from
+Python 3.8, except with a backport in Python 3.7.
+
+``datacls.dtyper`` is the ``dtyper.dataclass`` decorator, lazily loaded:
+https://github.com/rec/dtyper
 
 
 Usage examples
