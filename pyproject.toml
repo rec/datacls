@@ -13,7 +13,7 @@ homepage = "https://github.com/rec/datacls"
 name = "datacls"
 readme = "README.rst"
 repository = "https://github.com/rec/datacls"
-version = "4.4.2"
+version = "4.5.0"
 
 [tool.poetry.dependencies]
 dtyper = "*"
