@@ -8,7 +8,7 @@ auto = true
 
 [tool.poetry]
 authors = ["Tom Ritchford <tom@swirly.com>"]
-description = "Slightly improved, backward compatible dataclasses"
+description = "🗂 Adds a little to dataclasses 🗂"
 homepage = "https://github.com/rec/datacls"
 name = "datacls"
 readme = "README.rst"
