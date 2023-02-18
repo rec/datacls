@@ -1,4 +1,4 @@
-site_name: '🗂: `datacls`: take the edge off `dataclass` 🗂'
+site_name: '🗂: `datacls`: Take the edge off `dataclass` 🗂'
 
 theme:
   name: material
