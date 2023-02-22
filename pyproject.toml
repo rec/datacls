@@ -11,7 +11,7 @@ authors = ["Tom Ritchford <tom@swirly.com>"]
 description = "🗂 Take the edge off `dataclass` 🗂"
 homepage = "https://github.com/rec/datacls"
 name = "datacls"
-readme = "README.rst"
+readme = "README.me"
 repository = "https://github.com/rec/datacls"
 version = "4.5.1"
 
