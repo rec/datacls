@@ -55,7 +55,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="cyan" data-md-color-accent="">
   
     
     
@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#datacls-adds-a-little-to-dataclasses" class="md-skip">
+        <a href="#datacls-take-the-edge-off-dataclass" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              &#128450;: `datacls`: Adds a little to dataclasses &#128450;
+              &#128450;: `datacls`: Take the edge off `dataclass` &#128450;
             
           </span>
         </div>
@@ -161,7 +161,7 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          &#128450;: `datacls`: Adds a little to dataclasses &#128450;
+          &#128450;: `datacls`: Take the edge off `dataclass` &#128450;
           <span class="md-nav__icon md-icon"></span>
         </label>
       
@@ -201,27 +201,6 @@
         <li class="md-nav__item">
   <a href="#datacls.add_methods" class="md-nav__link">
     add_methods()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#datacls.immutable" class="md-nav__link">
-    datacls.immutable
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#datacls.mutable" class="md-nav__link">
-    datacls.mutable
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#datacls.field" class="md-nav__link">
-    datacls.field
   </a>
   
 </li>
@@ -290,27 +269,6 @@
         <li class="md-nav__item">
   <a href="#datacls.add_methods" class="md-nav__link">
     add_methods()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#datacls.immutable" class="md-nav__link">
-    datacls.immutable
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#datacls.mutable" class="md-nav__link">
-    datacls.mutable
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#datacls.field" class="md-nav__link">
-    datacls.field
   </a>
   
 </li>
@@ -435,10 +393,7 @@ assert (
 
   
 
-  <hr>
-<p></p>
-<h1 id="datacls--api-documentation">API Documentation</h1>
-<div class="doc doc-children">
+  <div class="doc doc-children">
 
 
 
@@ -504,65 +459,6 @@ and one new class method, <code>fields()</code></p>
 
   </div>
 
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-<a id="datacls.immutable"></a>
-  <div class="doc doc-contents first">
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<a id="datacls.mutable"></a>
-  <div class="doc doc-contents first">
-
-      <details class="quote">
-        <summary>Source code in <code>datacls/datacls.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr>
-<td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span>
-<span class="normal">130</span>
-<span class="normal">131</span>
-<span class="normal">132</span></pre></div></td>
-<td class="code"><div><pre><span></span><code><span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">dataclass</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">mutable</span><span class="p">(</span><span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">mutable</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">add_methods</span><span class="p">(</span><span class="n">dataclass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
-</code></pre></div></td>
-</tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<a id="datacls.field"></a>
-  <div class="doc doc-contents first">
-
-      <details class="quote">
-        <summary>Source code in <code>datacls/datacls.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr>
-<td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span></pre></div></td>
-<td class="code"><div><pre><span></span><code><span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">_field</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">MISSING</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">_field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">default_factory</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div></td>
-</tr></table></div>
-      </details>
   </div>
 
 </div>
