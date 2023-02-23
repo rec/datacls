@@ -1,12 +1,6 @@
-# 🗂: `datacls`: Adds a little to dataclasses 🗂
+# 🗂: `datacls`: Take the edge off `dataclass` 🗂
 
 ::: datacls
-
-::: datacls.immutable
-
-::: datacls.mutable
-
-::: datacls.field
 
 ## About this project
 
