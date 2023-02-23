@@ -1,5 +1,3 @@
-# 🗂 `datacls`: Take the edge off `dataclass` 🗂
-
 `dataclasses` is almost perfect.
 
 `datacls` is a tiny, thin wrapper around `dataclass.dataclasses` making it
