@@ -1,5 +1,5 @@
 """
-🗂 `datacls`: take the edge off `dataclass` 🗂
+# 🗂 `datacls`: take the edge off `dataclass` 🗂
 
 `dataclasses` is almost perfect.
 
