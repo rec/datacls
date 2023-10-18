@@ -27,6 +27,16 @@ flake8 = "*"
 pytest = "*"
 versy = "*"
 
+
+[tool.coverage]
+[tool.coverage.run]
+branch = "True"
+source = "datacls"
+
+[tool.coverage.report]
+fail_under = "100"
+skip_covered = "True"
+exclude_lines = ["", "pragma: no cover", "if False:", "if __name__ == .__main__.:", "raise NotImplementedError"]
 [build-system]
 build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core"]
