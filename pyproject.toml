@@ -14,6 +14,7 @@ name = "datacls"
 readme = "README.md"
 repository = "https://github.com/rec/datacls"
 version = "4.7.0"
+documentation = "https://rec.github.io/datacls"
 
 [tool.poetry.dependencies]
 dtyper = "*"
