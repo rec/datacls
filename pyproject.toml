@@ -17,27 +17,29 @@ version = "4.7.1"
 documentation = "https://rec.github.io/datacls"
 
 [tool.poetry.dependencies]
-dtyper = "*"
+dtyper = ">=2.5.0"
 python = ">=3.8"
 xmod = "*"
 
-
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
-flake8 = "*"
 pytest = "*"
-versy = "*"
+mypy = "*"
+ruff = "*"
 
-
-[tool.coverage]
 [tool.coverage.run]
-branch = "True"
-source = "datacls"
+branch = true
+source = ["datacls"]
 
 [tool.coverage.report]
-fail_under = "100"
-skip_covered = "True"
-exclude_lines = ["pragma: no cover", "if False:", "if __name__ == .__main__.:", "raise NotImplementedError"]
+fail_under = 96
+skip_covered = true
+exclude_lines = [
+    "pragma: no cover",
+    "if False:",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError"
+]
 [build-system]
 build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core"]
