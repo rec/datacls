@@ -8,7 +8,7 @@ homepage = "https://github.com/rec/datacls"
 name = "datacls"
 readme = "README.md"
 repository = "https://github.com/rec/datacls"
-version = "4.7.1"
+version = "4.8.0"
 documentation = "https://rec.github.io/datacls"
 
 [tool.poetry.dependencies]
