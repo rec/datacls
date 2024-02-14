@@ -89,18 +89,17 @@ a bit more self-contained, reflective, and saving a bit of typing.
     )
 """
 
+import dataclasses as dc
 from dataclasses import (
     MISSING,
     asdict,
     astuple,
     dataclass,
-    field as _field,
     fields,
-    make_dataclass as _make_dataclass,
     replace,
 )
-import functools
-from functools import cached_property
+from functools import cached_property, partial, wraps
+
 import xmod
 
 __all__ = (
@@ -125,24 +124,24 @@ _DEFAULTS = 'default', 'default_factory'
 _DFLT_ERR = 'Just one of default, default_factory and default_value may be set'
 
 
-@functools.wraps(dataclass)
+@wraps(dataclass)
 def mutable(cls=None, **kwargs):
     if not cls:
-        return functools.partial(mutable, **kwargs)
+        return partial(mutable, **kwargs)
 
     return add_methods(dataclass(cls, **kwargs))
 
 
-@functools.wraps(_field)
+@wraps(dc.field)
 def field(default_factory=MISSING, **kwargs):
-    return _field(default_factory=default_factory, **kwargs)
+    return dc.field(default_factory=default_factory, **kwargs)
 
 
 def add_methods(dcls):
     """Adds dataclasses functions as methods to a dataclass.
 
-      Adds three new instance methods: `asdict()`, `astuple()`, `replace()`
-      and one new class method, `fields()`
+    Adds three new instance methods: `asdict()`, `astuple()`, `replace()`
+    and one new class method, `fields()`
     """
     methods = (m for m in _METHODS if not hasattr(dcls, m))
     for m in methods:
@@ -153,15 +152,14 @@ def add_methods(dcls):
     return dcls
 
 
-@functools.wraps(_make_dataclass)
+@wraps(dc.make_dataclass)
 def make_dataclass(*a, **ka):
-    return add_methods(_make_dataclass(*a, **ka))
+    return add_methods(dc.make_dataclass(*a, **ka))
 
 
-hidden = functools.partial(field, compare=False, init=False, repr=False)
-immutable = functools.partial(mutable, frozen=True)
+hidden = partial(field, compare=False, init=False, repr=False)
+immutable = partial(mutable, frozen=True)
 dtyper = None
-
 
 
 class Datacls:

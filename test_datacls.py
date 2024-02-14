@@ -1,5 +1,6 @@
-import datacls
 from typing import Dict
+
+import datacls
 
 
 @datacls
@@ -124,7 +125,7 @@ def test_make_dataclass():
     C = datacls.make_dataclass(
         'C',
         [('x', int), 'y', ('z', int, datacls.field(default=5))],
-        namespace={'add_one': lambda self: self.x + 1}
+        namespace={'add_one': lambda self: self.x + 1},
     )
 
     assert sorted(c.name for c in C.fields()) == ['x', 'y', 'z']
