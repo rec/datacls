@@ -1,26 +1,49 @@
+[project]
+name = "datacls"
+version = "4.8.0"
+description = "🗂 Take the edge off `dataclass` 🗂"
+authors = [{ name = "Tom Ritchford", email = "tom@swirly.com" }]
+requires-python = ">=3.8"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+    "dtyper>=2.5.0",
+    "xmod",
+]
+
+[project.urls]
+Homepage = "https://github.com/rec/datacls"
+Repository = "https://github.com/rec/datacls"
+Documentation = "https://rec.github.io/datacls"
+
 [tool.doks]
 auto = true
 
-[tool.poetry]
-authors = ["Tom Ritchford <tom@swirly.com>"]
-description = "🗂 Take the edge off `dataclass` 🗂"
-homepage = "https://github.com/rec/datacls"
-name = "datacls"
-readme = "README.md"
-repository = "https://github.com/rec/datacls"
-version = "4.8.0"
-documentation = "https://rec.github.io/datacls"
+[dependency-groups]
+dev = [
+    "coverage",
+    "pytest",
+    "mypy",
+    "ruff",
+]
 
-[tool.poetry.dependencies]
-dtyper = ">=2.5.0"
-python = ">=3.8"
-xmod = "*"
+[tool.uv]
 
-[tool.poetry.group.dev.dependencies]
-coverage = "*"
-pytest = "*"
-mypy = "*"
-ruff = "*"
+[tool.uv.build-backend]
+module-root = ""
+
+[build-system]
+requires = ["uv_build>=0.9.0,<0.10.0"]
+build-backend = "uv_build"
 
 [tool.coverage.run]
 branch = true
@@ -41,6 +64,3 @@ line-length = 88
 
 [tool.ruff.format]
 quote-style = "single"
-[build-system]
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core"]
