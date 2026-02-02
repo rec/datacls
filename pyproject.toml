@@ -32,8 +32,9 @@ auto = true
 dev = [
     "coverage",
     "pytest",
-    "mypy",
     "ruff",
+    "pyupgrade>=3.21.2",
+    "ty>=0.0.14",
 ]
 
 [tool.uv]
@@ -52,12 +53,7 @@ source = ["datacls"]
 [tool.coverage.report]
 fail_under = 96
 skip_covered = true
-exclude_lines = [
-    "pragma: no cover",
-    "if False:",
-    "if __name__ == .__main__.:",
-    "raise NotImplementedError"
-]
+exclude_lines = ["pragma: no cover", "if False:", "if __name__ == .__main__.:", "raise NotImplementedError"]
 
 [tool.ruff]
 line-length = 88
